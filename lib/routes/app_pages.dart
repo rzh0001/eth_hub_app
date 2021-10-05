@@ -1,4 +1,5 @@
 import 'package:eth_hub_app/pages/404.dart';
+import 'package:eth_hub_app/pages/bill/bill_view.dart';
 import 'package:eth_hub_app/pages/mining/mining_view.dart';
 import 'package:get/get.dart';
 part 'app_routes.dart';
@@ -29,6 +30,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.mining_id,
       page: () => MiningPage(),
+    ),
+    GetPage(
+      name: AppRoutes.bill,
+      page: () => BillPage(),
+    ),
+    GetPage(
+      name: AppRoutes.bill_id,
+      page: () => BillPage(),
     ),
   ];
 
