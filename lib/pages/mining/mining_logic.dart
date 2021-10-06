@@ -1,3 +1,4 @@
+import 'package:eth_hub_app/routes/app_pages.dart';
 import 'package:eth_hub_app/utils/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -24,7 +25,7 @@ class MiningLogic extends GetxController {
       var account = prefs.getString(StoreKey.account);
       if (account == null) {
         if (accountController.text.isEmpty) {
-          EasyLoading.showError("Input Account Please!");
+          EasyLoading.showError("请输入帐号!");
           return;
         }
         prefs.setString(StoreKey.account, accountController.text);
@@ -55,9 +56,16 @@ class MiningLogic extends GetxController {
     });
   }
 
-  add() {
-    code++;
+  handleBillBtnTap() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var account = prefs.getString(StoreKey.account);
+    if (account == null && accountController.text.isEmpty) {
+      EasyLoading.showError("请输入帐号!");
+      return;
+    }
+    Get.toNamed(AppRoutes.bill);
   }
+
 
   @override
   Future<void> onInit() async {

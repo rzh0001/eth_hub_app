@@ -15,13 +15,13 @@ import 'pages/mining/mining_view.dart';
 import 'utils/storage.dart';
 
 // Must be top-level function
-_parseAndDecode(String response) {
-  return jsonDecode(response);
-}
-
-parseJson(String text) {
-  return compute(_parseAndDecode, text);
-}
+// _parseAndDecode(String response) {
+//   return jsonDecode(response);
+// }
+//
+// parseJson(String text) {
+//   return compute(_parseAndDecode, text);
+// }
 
 main() {
   // add interceptors

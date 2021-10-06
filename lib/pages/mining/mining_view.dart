@@ -28,7 +28,7 @@ class MiningPage extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              Get.toNamed(AppRoutes.bill);
+              logic.handleBillBtnTap();
             },
             child: Text(
               '账单',
@@ -67,16 +67,13 @@ class MiningPage extends StatelessWidget {
                         colors: MoreGradientColors.instagram,
                         stops: [0.3, 0.6, 0.9],
                       ),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20.0),
-                          topRight: Radius.circular(20.0)),
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
                     ),
                     // color: Colors.green,
                     child: Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0, right: 20, top: 4.0, bottom: 4.0),
+                          padding: const EdgeInsets.only(left: 20.0, right: 20, top: 4.0, bottom: 4.0),
                           child: SvgPicture.asset(
                             'assets/images/eth.svg',
                             height: 30,
@@ -98,27 +95,19 @@ class MiningPage extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 2.0),
                     child: Text(
                       '待入账收益',
-                      style:
-                          GoogleFonts.roboto(color: Colors.grey, fontSize: 12),
+                      style: GoogleFonts.roboto(color: Colors.grey, fontSize: 12),
                     ),
                   ),
                   Container(
                     // color: Colors.pink,
-                    margin: const EdgeInsets.only(
-                        top: 1.0, left: 20.0, right: 20.0),
+                    margin: const EdgeInsets.only(top: 1.0, left: 20.0, right: 20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Obx(() => Text.rich(TextSpan(children: [
-                              TextSpan(
-                                  text: '${logic.data.value.unpaid ?? 0}',
-                                  style: GoogleFonts.roboto(
-                                      fontSize: 36, color: Colors.black)),
-                              TextSpan(
-                                  text: ' ETH',
-                                  style: GoogleFonts.roboto(
-                                      fontSize: 20, color: Colors.black)),
+                              TextSpan(text: '${logic.data.value.unpaid ?? 0}', style: GoogleFonts.roboto(fontSize: 36, color: Colors.black)),
+                              TextSpan(text: ' ETH', style: GoogleFonts.roboto(fontSize: 20, color: Colors.black)),
                             ]))),
                       ],
                     ),
@@ -144,16 +133,12 @@ class MiningPage extends StatelessWidget {
                                 children: [
                                   Text(
                                     '钱包余额',
-                                    style: GoogleFonts.roboto(
-                                        color: Colors.grey, fontSize: 12),
+                                    style: GoogleFonts.roboto(color: Colors.grey, fontSize: 12),
                                   ),
                                   const SizedBox(
                                     height: 4,
                                   ),
-                                  Obx(() => Text(
-                                      '${logic.data.value.balance ?? 0} ETH',
-                                      style: GoogleFonts.roboto(
-                                          color: Colors.black, fontSize: 16))),
+                                  Obx(() => Text('${logic.data.value.balance ?? 0} ETH', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
                                 ],
                               ),
                             ),
@@ -169,16 +154,12 @@ class MiningPage extends StatelessWidget {
                                 children: [
                                   Text(
                                     '总收益',
-                                    style: GoogleFonts.roboto(
-                                        color: Colors.grey, fontSize: 12),
+                                    style: GoogleFonts.roboto(color: Colors.grey, fontSize: 12),
                                   ),
                                   const SizedBox(
                                     height: 4,
                                   ),
-                                  Obx(() => Text(
-                                      '${logic.data.value.totalEarnings ?? 0}  ETH',
-                                      style: GoogleFonts.roboto(
-                                          color: Colors.black, fontSize: 16))),
+                                  Obx(() => Text('${logic.data.value.totalEarnings ?? 0}  ETH', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
                                 ],
                               ),
                             ),
@@ -206,16 +187,12 @@ class MiningPage extends StatelessWidget {
                                 children: [
                                   Text(
                                     '实时算力',
-                                    style: GoogleFonts.roboto(
-                                        color: Colors.grey, fontSize: 12),
+                                    style: GoogleFonts.roboto(color: Colors.grey, fontSize: 12),
                                   ),
                                   const SizedBox(
                                     height: 4,
                                   ),
-                                  Obx(() => Text(
-                                      '${logic.data.value.currentHashrate ?? 0} GH/s',
-                                      style: GoogleFonts.roboto(
-                                          color: Colors.black, fontSize: 16))),
+                                  Obx(() => Text('${logic.data.value.currentHashrate ?? 0} GH/s', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
                                 ],
                               ),
                             ),
@@ -231,16 +208,12 @@ class MiningPage extends StatelessWidget {
                                 children: [
                                   Text(
                                     '报告算力',
-                                    style: GoogleFonts.roboto(
-                                        color: Colors.grey, fontSize: 12),
+                                    style: GoogleFonts.roboto(color: Colors.grey, fontSize: 12),
                                   ),
                                   const SizedBox(
                                     height: 4,
                                   ),
-                                  Obx(() => Text(
-                                      '${logic.data.value.reportedHashrate ?? 0}  GH/s',
-                                      style: GoogleFonts.roboto(
-                                          color: Colors.black, fontSize: 16))),
+                                  Obx(() => Text('${logic.data.value.reportedHashrate ?? 0}  GH/s', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
                                 ],
                               ),
                             ),
@@ -268,16 +241,12 @@ class MiningPage extends StatelessWidget {
                                 children: [
                                   Text(
                                     '有效份额',
-                                    style: GoogleFonts.roboto(
-                                        color: Colors.grey, fontSize: 12),
+                                    style: GoogleFonts.roboto(color: Colors.grey, fontSize: 12),
                                   ),
                                   const SizedBox(
                                     height: 4,
                                   ),
-                                  Obx(() => Text(
-                                      '${logic.data.value.validShares ?? 0}',
-                                      style: GoogleFonts.roboto(
-                                          color: Colors.black, fontSize: 16))),
+                                  Obx(() => Text('${logic.data.value.validShares ?? 0}', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
                                 ],
                               ),
                             ),
@@ -293,16 +262,12 @@ class MiningPage extends StatelessWidget {
                                 children: [
                                   Text(
                                     '延迟份额',
-                                    style: GoogleFonts.roboto(
-                                        color: Colors.grey, fontSize: 12),
+                                    style: GoogleFonts.roboto(color: Colors.grey, fontSize: 12),
                                   ),
                                   const SizedBox(
                                     height: 4,
                                   ),
-                                  Obx(() => Text(
-                                      '${logic.data.value.staleShares ?? 0}',
-                                      style: GoogleFonts.roboto(
-                                          color: Colors.black, fontSize: 16))),
+                                  Obx(() => Text('${logic.data.value.staleShares ?? 0}', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
                                 ],
                               ),
                             ),
@@ -337,15 +302,8 @@ class MiningPage extends StatelessWidget {
                         backgroundColor: Colors.red,
                         progressBarColor: Colors.greenAccent,
                         trailing: Text.rich(TextSpan(children: [
-                          TextSpan(
-                              text: '${logic.data.value.activeWorkers ?? 0}',
-                              style: GoogleFonts.roboto(
-                                  fontSize: 16, color: Colors.green)),
-                          TextSpan(
-                              text:
-                                  ' / ${logic.data.value.inactiveWorkers ?? 0}',
-                              style: GoogleFonts.roboto(
-                                  fontSize: 16, color: Colors.redAccent)),
+                          TextSpan(text: '${logic.data.value.activeWorkers ?? 0}', style: GoogleFonts.roboto(fontSize: 16, color: Colors.green)),
+                          TextSpan(text: ' / ${logic.data.value.inactiveWorkers ?? 0}', style: GoogleFonts.roboto(fontSize: 16, color: Colors.redAccent)),
                         ])),
                       ),
                     ),
