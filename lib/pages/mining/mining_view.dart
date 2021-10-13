@@ -1,5 +1,3 @@
-import 'package:eth_hub_app/routes/app_pages.dart';
-import 'package:eth_hub_app/utils/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'mining_logic.dart';
 
@@ -43,6 +40,7 @@ class MiningPage extends StatelessWidget {
   }
 
   buildBody() {
+    var cellWidth = 100.0;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -53,7 +51,7 @@ class MiningPage extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              height: 400,
+              height: 440,
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 // crossAxisAlignment: CrossAxisAlignment.center,
@@ -106,8 +104,10 @@ class MiningPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Obx(() => Text.rich(TextSpan(children: [
-                              TextSpan(text: '${logic.data.value.unpaid ?? 0}', style: GoogleFonts.roboto(fontSize: 36, color: Colors.black)),
+                              TextSpan(text: logic.convertEthAmount(logic.data.value.unpaid ?? 0), style: GoogleFonts.roboto(fontSize: 36, color: Colors.black)),
                               TextSpan(text: ' ETH', style: GoogleFonts.roboto(fontSize: 20, color: Colors.black)),
+                              TextSpan(text: ' ≈ ¥', style: GoogleFonts.roboto(fontSize: 20, color: Colors.blueGrey)),
+                              TextSpan(text: logic.convertCny(logic.data.value.unpaid ?? 0), style: GoogleFonts.roboto(fontSize: 20, color: Colors.blueGrey)),
                             ]))),
                       ],
                     ),
@@ -126,8 +126,30 @@ class MiningPage extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.05),
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
-                              height: 60,
-                              width: 150,
+                              height: 80,
+                              width: cellWidth,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '预计日收益',
+                                    style: GoogleFonts.roboto(color: Colors.grey, fontSize: 12),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  Obx(() => Text('${logic.convertEthAmount(logic.data.value.coinsPerDay ?? 0)} ETH', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
+                                  Obx(() => Text('≈ ¥ ${logic.convertCny(logic.data.value.coinsPerDay ?? 0)}', style: GoogleFonts.roboto(color: Colors.blueGrey, fontSize: 12))),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.05),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              height: 80,
+                              width: cellWidth,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -138,7 +160,8 @@ class MiningPage extends StatelessWidget {
                                   const SizedBox(
                                     height: 4,
                                   ),
-                                  Obx(() => Text('${logic.data.value.balance ?? 0} ETH', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
+                                  Obx(() => Text('${logic.convertEthAmount(logic.data.value.balance ?? 0)} ETH', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
+                                  Obx(() => Text('≈ ¥ ${logic.convertCny(logic.data.value.balance ?? 0)}', style: GoogleFonts.roboto(color: Colors.blueGrey, fontSize: 12))),
                                 ],
                               ),
                             ),
@@ -147,8 +170,8 @@ class MiningPage extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.05),
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
-                              height: 60,
-                              width: 150,
+                              height: 80,
+                              width: cellWidth,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -159,7 +182,9 @@ class MiningPage extends StatelessWidget {
                                   const SizedBox(
                                     height: 4,
                                   ),
-                                  Obx(() => Text('${logic.data.value.totalEarnings ?? 0}  ETH', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
+                                  Obx(() =>
+                                      Text('${logic.convertEthAmount(logic.data.value.totalEarnings ?? 0)}  ETH', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
+                                  Obx(() => Text('≈ ¥ ${logic.convertCny(logic.data.value.totalEarnings ?? 0)}', style: GoogleFonts.roboto(color: Colors.blueGrey, fontSize: 12))),
                                 ],
                               ),
                             ),
@@ -181,7 +206,7 @@ class MiningPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               height: 60,
-                              width: 150,
+                              width: cellWidth,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -202,7 +227,28 @@ class MiningPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               height: 60,
-                              width: 150,
+                              width: cellWidth,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '平均算力',
+                                    style: GoogleFonts.roboto(color: Colors.grey, fontSize: 12),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  Obx(() => Text('${logic.data.value.averageHashrate ?? 0}  GH/s', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.05),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              height: 60,
+                              width: cellWidth,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -235,7 +281,7 @@ class MiningPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               height: 60,
-                              width: 150,
+                              width: cellWidth,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -256,7 +302,7 @@ class MiningPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               height: 60,
-                              width: 150,
+                              width: cellWidth,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -268,6 +314,27 @@ class MiningPage extends StatelessWidget {
                                     height: 4,
                                   ),
                                   Obx(() => Text('${logic.data.value.staleShares ?? 0}', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.05),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              height: 60,
+                              width: cellWidth,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '无效份额',
+                                    style: GoogleFonts.roboto(color: Colors.grey, fontSize: 12),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  Obx(() => Text('${logic.data.value.invalidShares ?? 0}', style: GoogleFonts.roboto(color: Colors.black, fontSize: 16))),
                                 ],
                               ),
                             ),

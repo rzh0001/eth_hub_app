@@ -1,3 +1,4 @@
+import 'package:eth_hub_app/url.dart';
 import 'package:eth_hub_app/utils/storage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -22,8 +23,7 @@ class BillLogic extends GetxController {
   }
 
   void httpGet(String account) {
-    // dio.get('http://www.ethhub.vip:8080/eth_hub/app/member/miningData/' + account).then((value) {
-    dio.get('http://192.168.206.1:8080/eth_hub/app/member/bill/' + account).then((value) {
+    dio.get(AppUrl.bill + account).then((value) {
       var res = BillData.fromJson(value.data);
       var bool = res.success ?? false;
       if (!bool) {
@@ -40,7 +40,7 @@ class BillLogic extends GetxController {
     } else if (type == 'SETTLE') {
       return '矿工收益';
     } else if (type == 'SPARK-BALANCE') {
-      return '星火结余';
+      return '结余';
     } else if (type == 'CASHOUT') {
       return '提现';
     }

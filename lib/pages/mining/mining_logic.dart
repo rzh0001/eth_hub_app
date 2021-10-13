@@ -1,4 +1,5 @@
 import 'package:eth_hub_app/routes/app_pages.dart';
+import 'package:eth_hub_app/url.dart';
 import 'package:eth_hub_app/utils/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -38,8 +39,7 @@ class MiningLogic extends GetxController {
   }
 
   void httpGet(String account) {
-    // dio.get('http://www.ethhub.vip:8080/eth_hub/app/member/miningData/' + account).then((value) {
-    dio.get('http://192.168.206.1:8080/eth_hub/app/member/miningData/' + account).then((value) {
+    dio.get(AppUrl.mining + account).then((value) {
       var res = MiningData.fromJson(value.data);
       var bool = res.success ?? false;
       if (!bool) {
@@ -56,6 +56,21 @@ class MiningLogic extends GetxController {
     });
   }
 
+  String convertEthAmount(double ethAmount) {
+    if (ethAmount > 1000) {
+      return ethAmount.toStringAsFixed(1);
+    } else if (ethAmount > 100) {
+      return ethAmount.toStringAsFixed(2);
+    } else if (ethAmount > 10) {
+      return ethAmount.toStringAsFixed(3);
+    }
+    return ethAmount.toString();
+  }
+
+  String convertCny(double ethAmount) {
+    return (ethAmount * (data.value.cnyPrice ?? 0)).toStringAsFixed(2);
+  }
+
   handleBillBtnTap() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var account = prefs.getString(StoreKey.account);
@@ -65,7 +80,6 @@ class MiningLogic extends GetxController {
     }
     Get.toNamed(AppRoutes.bill);
   }
-
 
   @override
   Future<void> onInit() async {
