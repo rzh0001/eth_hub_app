@@ -68,7 +68,11 @@ class MiningLogic extends GetxController {
   }
 
   String convertCny(double ethAmount) {
-    return (ethAmount * (data.value.cnyPrice ?? 0)).toStringAsFixed(2);
+    var value = ethAmount * (data.value.cnyPrice ?? 0);
+    if (value > 1000000) {
+      return value.toStringAsFixed(0);
+    }
+    return (value).toStringAsFixed(2);
   }
 
   handleBillBtnTap() async {
