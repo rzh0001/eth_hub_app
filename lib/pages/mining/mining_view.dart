@@ -106,12 +106,11 @@ class MiningPage extends StatelessWidget {
                         Obx(() => Text.rich(TextSpan(children: [
                               TextSpan(text: logic.convertEthAmount(logic.data.value.unpaid ?? 0), style: GoogleFonts.roboto(fontSize: 36, color: Colors.black)),
                               TextSpan(text: ' ETH', style: GoogleFonts.roboto(fontSize: 20, color: Colors.black)),
-                              TextSpan(text: ' ≈ ¥', style: GoogleFonts.roboto(fontSize: 20, color: Colors.blueGrey)),
-                              TextSpan(text: logic.convertCny(logic.data.value.unpaid ?? 0), style: GoogleFonts.roboto(fontSize: 20, color: Colors.blueGrey)),
                             ]))),
                       ],
                     ),
                   ),
+                  Obx(() => Text('≈ ¥ ${logic.convertCny(logic.data.value.unpaid ?? 0)}', style: GoogleFonts.roboto(color: Colors.blueGrey, fontSize: 16))),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
